@@ -1,12 +1,17 @@
 import Fastify from "fastify"
 import fastifyBasicAuth from "@fastify/basic-auth"
+import {readFileSync} from "fs"
 
 
 const port = 3000;
 const authenticate = {realm: 'Westeros'}
 
 const fastify = Fastify({
-    logger: true
+    logger: true,
+    https: {
+        key: readFileSync('../server.key'),
+        cert: readFileSync('../server.crt')
+    }
 })
 
 fastify.register(fastifyBasicAuth, {
